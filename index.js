@@ -162,7 +162,18 @@ function viewRoles() {
         // Restart initial choice function 
         initialChoice();
 }
+
 // viewEmployees function
+function viewEmployees() {
+    let query = 'SELECT * FROM employees ORDER BY id ASC';
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res);
+    });
+        console.log(`++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`);
+        // Restart initial choice function 
+        initialChoice();
+}
 
 // updateRoles function
 
