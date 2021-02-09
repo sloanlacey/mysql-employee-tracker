@@ -153,12 +153,14 @@ function viewDepartments() {
 
 // viewRoles function
 function viewRoles() {
-    let query = 'SELECT * FROM roles';
+    let query = 'SELECT * FROM roles ORDER BY id ASC';
     connection.query(query, function (err, res) {
-        res.forEach((roles) => {
-            console.log(``);
-        });
-    })
+        if (err) throw err;
+        console.table(res);
+    });
+        console.log(`++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`);
+        // Restart initial choice function 
+        initialChoice();
 }
 // viewEmployees function
 
