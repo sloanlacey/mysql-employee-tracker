@@ -135,9 +135,87 @@ function addRole () {
 }
 
 // addEmployee function
-function addEmployee() {
+function addEmployee () {
+    // Select the emp dept
+    let deptsArr = [];
+    connection.query(`SELECT * FROM department`, (err, res) => {
+        if (err) throw err;
 
-}
+        res.forEach((element) => {
+            deptsArr.push(`${element.id} ${element.deptName}`);
+        });
+    // Select the emp role
+    let rolesArr = [];
+    connection.query(`SELECT * FROM roles`, (err, res) => {
+        if (err) throw err;
+        
+        res.forEach((element) => {
+            rolesArr.push(`${element.id} ${element.roleTitle}`);
+        });
+    // Select the emp manager
+    let managerArr = [];
+    connection.query(`SELECT id, first_name, last_name FROM employees`, (err, res) => {
+        if (err) throw err;
+
+        res.forEach((element) => {
+            managerArr.push(`${element.id} ${element.first_name} ${element.last_name}`);
+        });
+
+        // Prompt questions about new emp
+        inquirer.prompt([
+                        {
+                            type: 'input',
+                            name: 'firstName',
+                            message: 'What is the first name of the new employee you\'d like to add?'
+                        }, {
+                            type: 'input',
+                            name: 'lastName',
+                            message: 'What is the last name of the new employee you\'d like to add?'
+                        }, {
+                            type: 'list',
+                            name: 'role',
+                            message: 'What is the role title of the new employee you\'d like to add?',
+                            choices: [
+                                    rolesArr,
+                                ], 
+                        }, {
+                            type: 'input',
+                            name: 'dept',
+                            message: 'What is the department of the new employee you\'d like to add?',
+                            choices: [
+                                    deptsArr,
+                            ],
+                        }, {
+                            type: 'list',
+                            name: 'manager',
+                            message: 'Who is the manager for the new employee you\'d like to add?',
+                            choices: [
+                                    managerArr,
+                            ],
+                        }
+                    ]).then((response) => {
+                        let roleChoice = parseInt(response.role);
+                        let managerChoice = parseInt(response.manager);
+                        connection.query('INSERT INTO employees SET ?',
+                        {
+                            first_name: response.firstName,
+                            last_name: response.lastName,
+                            role_id: roleChoice,
+                            manager_id: managerChoice,
+                        },
+                        (err, res) => {
+                            if (err) throw err;
+                            console.log(`\n${res.affectedRows} employee created.`);
+                            console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+                            viewEmployees();
+                        })
+                    });
+                },
+            );
+        });
+    });
+};
+
 
 // viewDepartments function
 function viewDepartments() {
@@ -146,7 +224,7 @@ function viewDepartments() {
         if (err) throw err;
         console.table(res);
     });
-        console.log(`++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`);
+        console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
         // Restart initial choice function 
         initialChoice();
 }
@@ -158,7 +236,7 @@ function viewRoles() {
         if (err) throw err;
         console.table(res);
     });
-        console.log(`++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`);
+        console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
         // Restart initial choice function 
         initialChoice();
 }
@@ -170,7 +248,7 @@ function viewEmployees() {
         if (err) throw err;
         console.table(res);
     });
-        console.log(`++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`);
+        console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
         // Restart initial choice function 
         initialChoice();
 }
