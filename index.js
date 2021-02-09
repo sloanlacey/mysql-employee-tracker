@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const mysql = require('mysql');
 const consoleTable = require('console.table');
 require('console.table');
-const db = require('./sql');
+// const db = require('./sql');
 // 
 // const PORT = process.env.PORT || 8080;
 
@@ -133,18 +133,34 @@ function addRole () {
         });
     });
 }
+
 // addEmployee function
+function addEmployee() {
+
+}
 
 // viewDepartments function
+function viewDepartments() {
+    let query = 'SELECT * FROM departments ORDER BY id ASC';
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res);
+    });
+        console.log(`++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`);
+        // Restart initial choice function 
+        initialChoice();
+}
 
 // viewRoles function
-
+function viewRoles() {
+    let query = 'SELECT * FROM roles';
+    connection.query(query, function (err, res) {
+        res.forEach((roles) => {
+            console.log(``);
+        });
+    })
+}
 // viewEmployees function
 
 // updateRoles function
 
-
-// app.listen(PORT, function() {
-//     // Log (server-side) when our server has started
-//     console.log(`Server listening on: http://localhost: ${PORT}`);
-//   });
