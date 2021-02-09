@@ -2,8 +2,10 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 const consoleTable = require('console.table');
+require('console.table');
+const db = require('./sql');
 // 
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
 
 // Connection to DB
 const connection = mysql.createConnection({
@@ -16,7 +18,7 @@ const connection = mysql.createConnection({
 
 
 connection.connect(function (err) {
-    if (err) throw err;
+    // if (err) throw err;
     // run the start function after the connection is made to prompt the user
     // call funtion to run first prompts here
     initialChoice();
@@ -62,17 +64,75 @@ function initialChoice () {
             updateEmpRoles();
             break;
           case 'End the application':
-            connection.end();
+            db.connection.end();
             console.log('The application has ended.')
             break;  
         }
     });
 }
 
-// addDepartment function
-
+// Add a Department
+function addDepartment() {
+    inquirer.prompt({
+        type: 'input',
+        name: 'department',
+        message: 'What is the name of the new department you wish to add?'
+    }).then(function (answer) {
+        let query = 'INSERT INTO departments (deptName) VALUES ( ? )';
+        connection.query(query, answer.departments, function (err, res) {
+            if (err) throw err;
+            console.log(`The department titled: ${answer.departments} has been added.`);
+        });
+        // console.log();
+        // Add a cl and maybe call the view departments function here? Should it be a default?
+    });
+}
 // addRole function
+function addRole () {
+    let query = `SELECT * FROM departments`;
 
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+
+        const deptChoice = res.map(({ id, deptName }) => ({
+            value: id,
+            name: `${id} ${deptName}`,
+        }));
+
+        inquirer.prompt({
+            type: 'input',
+            name: 'roleName',
+            message: 'Which new role would you like to add?',
+        }, {
+            type: 'input',
+            name: 'roleSalary',
+            message: 'What is the salary for this role?',
+        }, {
+            type: 'input',
+            name: 'departmentId',
+            message: 'Into which department would you like to add this new role?',
+            choices: [
+                deptChoice,
+            ],
+        }).then(function (answer) {
+            let query = `INSERT INTO role set ?`;
+            connection.query(
+                query,
+                {
+                    roleTitle: answer.roleName,
+                    salary: answer.roleSalary,
+                    department_id: departmentId,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log(`\n${res.affectedRows} role created.`);
+
+                    // Add viewRoles function call here?
+                },
+            );
+        });
+    });
+}
 // addEmployee function
 
 // viewDepartments function
