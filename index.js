@@ -17,10 +17,9 @@ const connection = mysql.createConnection({
 });
 
 
-connection.connect(function (err) {
-    // if (err) throw err;
-    // run the start function after the connection is made to prompt the user
-    // call funtion to run first prompts here
+connection.connect((err) => {
+    if (err) throw err;
+    console.log(`connected as id ${connection.threadId}\n`);
     initialChoice();
   });
 
@@ -64,8 +63,7 @@ function initialChoice () {
             updateEmpRoles();
             break;
           case 'End the application':
-            db.connection.end();
-            console.log('The application has ended.')
+            console.log('The application has ended.');
             break;  
         }
     });
@@ -227,7 +225,7 @@ function viewDepartments() {
         console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
         // Restart initial choice function 
         initialChoice();
-}
+};
 
 // viewRoles function
 function viewRoles() {
@@ -239,11 +237,11 @@ function viewRoles() {
         console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
         // Restart initial choice function 
         initialChoice();
-}
+};
 
 // viewEmployees function
 function viewEmployees() {
-    let query = 'SELECT * FROM employees ORDER BY id ASC';
+    let query = 'SELECT employees.id, employees.first_name, employees.last_name, employees.role_id, employees.manager_id FROM employees JOIN role ON employees.role_id = roles.id JOIN departments ON departments.id = roles.department_id ORDER BY employees.id ASC;';
     connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
@@ -251,7 +249,7 @@ function viewEmployees() {
         console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
         // Restart initial choice function 
         initialChoice();
-}
+};
 
 // updateRoles function
 
