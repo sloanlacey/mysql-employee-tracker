@@ -8,29 +8,27 @@ USE employee_tracker_DB;
 
 CREATE TABLE departments (
 
-    id INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 
-    deptName VARCHAR(30) NOT NULL,
-
-    PRIMARY KEY (id)
+    dept_name VARCHAR(30) UNIQUE NOT NULL
 );
 
 CREATE TABLE roles (
 
-    id INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 
-    roleTitle VARCHAR(30) NOT NULL,
+    role_title VARCHAR(30) NOT NULL,
 
-    salary DECIMAL(10, 4) NOT NULL,
+    salary DECIMAL NOT NULL,
 
     department_id INT NOT NULL,
 
-    PRIMARY KEY (id)
+    CONSTRAINT fkey_dept FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE CASCADE
 );
 
 CREATE TABLE employees (
 
-    id INT NOT NULL AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
 
     first_name VARCHAR(30) NOT NULL,
 
@@ -38,7 +36,9 @@ CREATE TABLE employees (
 
     role_id INT NOT NULL,
 
+    CONSTRAINT fkey_roles FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
+
     manager_id INT,
 
-    PRIMARY KEY (id)
+    CONSTRAINT fkey_manager FOREIGN KEY (manager_id) REFERENCES employees(id) ON DELETE SET NULL
 );

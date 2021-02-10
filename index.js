@@ -1,7 +1,8 @@
+'use strict';
 // Dependencies
 const inquirer = require('inquirer');
 const mysql = require('mysql');
-const consoleTable = require('console.table');
+const cTable = require('console.table');
 require('console.table');
 // const db = require('./sql');
 // 
@@ -76,8 +77,7 @@ function addDepartment() {
         name: 'department',
         message: 'What is the name of the new department you wish to add?'
     }).then(function (answer) {
-        let query = 'INSERT INTO departments (deptName) VALUES ( ? )';
-        connection.query(query, answer.departments, function (err, res) {
+        connection.query('INSERT INTO departments (dept_name) VALUES ?', [answer.departments], function (err, res) {
             if (err) throw err;
             console.log(`The department titled: ${answer.departments} has been added.`);
         });
@@ -92,9 +92,9 @@ function addRole () {
     connection.query(query, function (err, res) {
         if (err) throw err;
 
-        const deptChoice = res.map(({ id, deptName }) => ({
+        const deptChoice = res.map(({ id, dept_name }) => ({
             value: id,
-            name: `${id} ${deptName}`,
+            name: `${id} ${dept_name}`,
         }));
 
         inquirer.prompt({
@@ -117,7 +117,7 @@ function addRole () {
             connection.query(
                 query,
                 {
-                    roleTitle: answer.roleName,
+                    role_title: answer.roleName,
                     salary: answer.roleSalary,
                     department_id: departmentId,
                 },
@@ -140,7 +140,7 @@ function addEmployee () {
         if (err) throw err;
 
         res.forEach((element) => {
-            deptsArr.push(`${element.id} ${element.deptName}`);
+            deptsArr.push(`${element.id} ${element.dept_name}`);
         });
     // Select the emp role
     let rolesArr = [];
@@ -148,7 +148,7 @@ function addEmployee () {
         if (err) throw err;
         
         res.forEach((element) => {
-            rolesArr.push(`${element.id} ${element.roleTitle}`);
+            rolesArr.push(`${element.id} ${element.role_title}`);
         });
     // Select the emp manager
     let managerArr = [];
@@ -217,38 +217,27 @@ function addEmployee () {
 
 // viewDepartments function
 function viewDepartments() {
-    let query = 'SELECT * FROM departments ORDER BY id ASC';
-    connection.query(query, function (err, res) {
-        if (err) throw err;
-        console.table(res);
-    });
-        console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-        // Restart initial choice function 
+    connection.query("SELECT * FROM departments", function (err, data) {
+        console.table(data);
         initialChoice();
+    })
 };
 
 // viewRoles function
 function viewRoles() {
-    let query = 'SELECT * FROM roles ORDER BY id ASC';
-    connection.query(query, function (err, res) {
-        if (err) throw err;
-        console.table(res);
-    });
-        console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-        // Restart initial choice function 
+    connection.query("SELECT * FROM roles", function (err, data) {
+        console.table(data);
         initialChoice();
+    })
 };
 
 // viewEmployees function
 function viewEmployees() {
-    let query = 'SELECT employees.id, employees.first_name, employees.last_name, employees.role_id, employees.manager_id FROM employees JOIN role ON employees.role_id = roles.id JOIN departments ON departments.id = roles.department_id ORDER BY employees.id ASC;';
-    connection.query(query, function (err, res) {
-        if (err) throw err;
-        console.table(res);
-    });
-        console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-        // Restart initial choice function 
+
+    connection.query("SELECT * FROM employees", function (err, data) {
+        console.table(data);
         initialChoice();
+    })
 };
 
 // updateRoles function
@@ -262,11 +251,11 @@ function updateEmpRoles () {
         });
 
         let jobTitle = [];
-        connection.query(`SELECT id, roleTitle FROM roles`, (err, res) => {
+        connection.query(`SELECT id, role_title FROM roles`, (err, res) => {
             if (err) throw err;
 
             res.forEach((element) => {
-                jobTitle.push(`${element.id} ${element.roleTitle}`);
+                jobTitle.push(`${element.id} ${element.role_title}`);
             });
 
             inquirer.prompt([
