@@ -164,11 +164,11 @@ function addEmployee () {
                         {
                             type: 'input',
                             name: 'firstName',
-                            message: 'What is the first name of the new employee you\'d like to add?'
+                            message: 'What is the first name of the new employee you\'d like to add?',
                         }, {
                             type: 'input',
                             name: 'lastName',
-                            message: 'What is the last name of the new employee you\'d like to add?'
+                            message: 'What is the last name of the new employee you\'d like to add?',
                         }, {
                             type: 'list',
                             name: 'role',
@@ -252,4 +252,47 @@ function viewEmployees() {
 };
 
 // updateRoles function
+function updateEmpRoles () {
+    let employees = [];
+    connection.query(`SELECT id, first_name, last_name FROM employees`, (err, res) => {
+        if (err) throw err;
 
+        res.forEach((element) => {
+            employees.push(`${element.id} ${element.first_name} ${element.last_name}`,);
+        });
+
+        let jobTitle = [];
+        connection.query(`SELECT id, roleTitle FROM roles`, (err, res) => {
+            if (err) throw err;
+
+            res.forEach((element) => {
+                jobTitle.push(`${element.id} ${element.roleTitle}`);
+            });
+
+            inquirer.prompt([
+                {
+                    type: 'list',
+                    name: 'empOptions',
+                    message: 'Which employee\'s role would you like to update?',
+                    choices: employees,
+                }, {
+                    type: 'list',
+                    name: 'roleOptions',
+                    message: 'Please choose a new position for the employee.',
+                    choices: updatedRoles,
+                },
+            ]).then((response) => {
+                let updatedEmp = parseInt(response.empOptions);
+                let updatedRole = parseInt(response.roleOptions);
+                connection.query(`UPDATE employees SET role_id = ${updatedRole} WHERE id = ${updatedEmp}`, (err, res) => {
+                    if (err) throw err;
+                    console.log(`\n\n${res.affectedRows} updated successfully.`);
+                    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+                    initialChoice();
+                },
+                );
+            });
+        });
+        },
+    );
+};
