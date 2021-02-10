@@ -72,18 +72,17 @@ function initialChoice () {
 
 // Add a Department
 function addDepartment() {
-    inquirer.prompt({
-        type: 'input',
-        name: 'department',
-        message: 'What is the name of the new department you wish to add?'
-    }).then(function (answer) {
-        connection.query('INSERT INTO departments (dept_name) VALUES ?', [answer.departments], function (err, res) {
+    inquirer.prompt([{
+        type: "input",
+        name: "department",
+        message: "What is the name of the department that you wish to add?"
+    }, ]).then(function(res) {
+        connection.query('INSERT INTO departments (dept_name) VALUES (?)', [res.department], function(err, data) {
             if (err) throw err;
-            console.log(`The department titled: ${answer.departments} has been added.`);
-        });
-        // console.log();
-        // Add a cl and maybe call the view departments function here? Should it be a default?
-    });
+            console.table("Successfully Inserted");
+            initialChoice();
+        })
+    })
 }
 // addRole function
 function addRole () {
