@@ -34,7 +34,7 @@ CREATE TABLE employees (
 
     last_name VARCHAR(30) NOT NULL,
 
-    role_id INT NOT NULL,
+    role_id INT(10) NOT NULL,
 
     CONSTRAINT fkey_roles FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
 

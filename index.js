@@ -168,46 +168,26 @@ function viewEmployees() {
 
 // updateRoles function
 function updateEmpRoles () {
-    let employees = [];
-    connection.query(`SELECT id, first_name, last_name FROM employees`, (err, res) => {
-        if (err) throw err;
 
-        res.forEach((element) => {
-            employees.push(`${element.id} ${element.first_name} ${element.last_name}`,);
-        });
+    connection.query('SELECT first_name, last_name, id FROM employees', function (err, res) {
+        let employee = res.map(employees => ({name: employees.first_name + ' ' + employees.last_name, value: employees.id}))
 
-        let jobTitle = [];
-        connection.query(`SELECT id, role_title FROM roles`, (err, res) => {
-            if (err) throw err;
-
-            res.forEach((element) => {
-                jobTitle.push(`${element.id} ${element.role_title}`);
-            });
-
-            inquirer.prompt([
-                {
-                    type: 'list',
-                    name: 'empOptions',
-                    message: 'Which employee\'s role would you like to update?',
-                    choices: employees,
-                }, {
-                    type: 'list',
-                    name: 'roleOptions',
-                    message: 'Please choose a new position for the employee.',
-                    choices: updatedRoles,
-                },
-            ]).then((response) => {
-                let updatedEmp = parseInt(response.empOptions);
-                let updatedRole = parseInt(response.roleOptions);
-                connection.query(`UPDATE employees SET role_id = ${updatedRole} WHERE id = ${updatedEmp}`, (err, res) => {
-                    if (err) throw err;
-                    console.log(`\n\n${res.affectedRows} updated successfully.`);
-                    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-                    initialChoice();
-                },
-                );
-            });
-        });
-        },
-    );
+        inquirer.prompt([
+            {
+                type: 'list',
+                name: 'empNames',
+                message: 'Which employee\'s role would you like to update?',
+                choices: employee
+            }, {
+                type: 'input',
+                name: 'newRole',
+                message: 'What is the new role ID for this employee?',
+            }
+        ]).then (function (res) {
+            connection.query(`UPDATE employees SET role_id = ${res.newRole} WHERE id = ${res.empNames}`, function (err, res) {
+                console.table(res);
+                initialChoice();
+            })
+        })
+    })
 };
