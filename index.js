@@ -111,32 +111,7 @@ function addRole () {
 
 // addEmployee function
 function addEmployee () {
-    // Select the emp dept
-    let deptsArr = [];
-    connection.query(`SELECT * FROM department`, (err, res) => {
-        if (err) throw err;
-
-        res.forEach((element) => {
-            deptsArr.push(`${element.id} ${element.dept_name}`);
-        });
-    // Select the emp role
-    let rolesArr = [];
-    connection.query(`SELECT * FROM roles`, (err, res) => {
-        if (err) throw err;
-        
-        res.forEach((element) => {
-            rolesArr.push(`${element.id} ${element.role_title}`);
-        });
-    // Select the emp manager
-    let managerArr = [];
-    connection.query(`SELECT id, first_name, last_name FROM employees`, (err, res) => {
-        if (err) throw err;
-
-        res.forEach((element) => {
-            managerArr.push(`${element.id} ${element.first_name} ${element.last_name}`);
-        });
-
-        // Prompt questions about new emp
+    
         inquirer.prompt([
                         {
                             type: 'input',
@@ -147,49 +122,23 @@ function addEmployee () {
                             name: 'lastName',
                             message: 'What is the last name of the new employee you\'d like to add?',
                         }, {
-                            type: 'list',
-                            name: 'role',
-                            message: 'What is the role title of the new employee you\'d like to add?',
-                            choices: [
-                                    rolesArr,
-                                ], 
+                            type: 'number',
+                            name: 'roleId',
+                            message: 'What is the role ID for this new employee? Please enter the number.', 
                         }, {
-                            type: 'input',
-                            name: 'dept',
-                            message: 'What is the department of the new employee you\'d like to add?',
-                            choices: [
-                                    deptsArr,
-                            ],
-                        }, {
-                            type: 'list',
-                            name: 'manager',
-                            message: 'Who is the manager for the new employee you\'d like to add?',
-                            choices: [
-                                    managerArr,
-                            ],
+                            type: 'number',
+                            name: 'managerId',
+                            messgae: 'What is the manager ID for this new employee? Please enter the number.'
                         }
-                    ]).then((response) => {
-                        let roleChoice = parseInt(response.role);
-                        let managerChoice = parseInt(response.manager);
-                        connection.query('INSERT INTO employees SET ?',
-                        {
-                            first_name: response.firstName,
-                            last_name: response.lastName,
-                            role_id: roleChoice,
-                            manager_id: managerChoice,
-                        },
-                        (err, res) => {
+                    ]).then (function(res) {
+                        connection.query('INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [res.firstName, res.lastName, res.roleId, res.managerId], function (err, data) {
                             if (err) throw err;
-                            console.log(`\n${res.affectedRows} employee created.`);
-                            console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-                            viewEmployees();
+                            console.table('Employee successfully added.')
+                            initialChoice();
                         })
-                    });
-                },
-            );
-        });
-    });
+                });
 };
+
 
 
 // viewDepartments function
