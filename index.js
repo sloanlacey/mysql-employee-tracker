@@ -86,50 +86,28 @@ function addDepartment() {
 }
 // addRole function
 function addRole () {
-    let query = `SELECT * FROM departments`;
 
-    connection.query(query, function (err, res) {
-        if (err) throw err;
-
-        const deptChoice = res.map(({ id, dept_name }) => ({
-            value: id,
-            name: `${id} ${dept_name}`,
-        }));
-
-        inquirer.prompt({
+        inquirer.prompt([
+        {
             type: 'input',
             name: 'roleName',
             message: 'Which new role would you like to add?',
         }, {
-            type: 'input',
+            type: 'number',
             name: 'roleSalary',
             message: 'What is the salary for this role?',
         }, {
-            type: 'input',
+            type: 'number',
             name: 'departmentId',
-            message: 'Into which department would you like to add this new role?',
-            choices: [
-                deptChoice,
-            ],
-        }).then(function (answer) {
-            let query = `INSERT INTO role set ?`;
-            connection.query(
-                query,
-                {
-                    role_title: answer.roleName,
-                    salary: answer.roleSalary,
-                    department_id: departmentId,
-                },
-                function (err, res) {
-                    if (err) throw err;
-                    console.log(`\n${res.affectedRows} role created.`);
-
-                    // Add viewRoles function call here?
-                },
-            );
+            message: 'Please enter the department ID where you would like to add this role.',
+        }
+        ]).then(function (response) {
+            connection.query('INSERT INTO roles (role_title, salary, department_id) VALUES (?, ?, ?)', [response.role_title, response.salary, response.department_id], function (err, data) {
+                console.table(data);
+            });
+            initialChoice();
         });
-    });
-}
+    }
 
 // addEmployee function
 function addEmployee () {
