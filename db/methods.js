@@ -5,11 +5,11 @@ class DB {
         this.connection = connection;
     }
 
-    // addDepartment(department) {
-    //     return this.connection.query("INSERT INTO departments SET ?", {
-    //       name: department
-    //     });
-    // };
+    addDepartment(departments) {
+        return this.connection.query("INSERT INTO departments SET ?", {
+          dept_name: departments
+        });
+    };
 
     // addRole(role, salary) {
     //     return this.connection.query("INSERT INTO roles SET ?", {

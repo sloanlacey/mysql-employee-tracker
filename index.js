@@ -47,7 +47,7 @@ const initialChoice = () => {
         }
     });
 }
-
+// View functions
 async function viewDepartments() {
     //departments variable which set to view all departments function from index.js in db folder
     const viewDept = await db.viewDepartments();
@@ -58,21 +58,30 @@ async function viewDepartments() {
   }
 
 async function viewRoles() {
-    //departments variable which set to view all departments function from index.js in db folder
     const viewRole = await db.viewRoles();
-    // console tables departments variable
     console.table(viewRole);
-    // runs main menu prompt 
+    
     initialChoice();
   }
 
 async function viewEmployees() {
-    //departments variable which set to view all departments function from index.js in db folder
     const viewEmps = await db.viewEmployees();
-    // console tables departments variable
     console.table(viewEmps);
-    // runs main menu prompt 
+
     initialChoice();
   }
+
+  async function addDepartment() {
+    const answer = await inquirer.prompt({
+      name: "departments",
+      type: "input",
+      message: "What department would you like to add?"
+    });
+  
+    const res = await db.addDepartment(answer.departments);
+  
+    console.log(`Added ${answer.departments} to the the database.`);
+    viewDepartments();
+}
 
   initialChoice();
