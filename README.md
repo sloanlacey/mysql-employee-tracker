@@ -1,10 +1,8 @@
 # mysql-employee-tracker
 
-This is a command line application that allows business owners to build and manage an employee database.
-
 ## Description
 
-
+This is a command line application that allows business owners to build and manage an employee database.
 
 ## Table of contents
 
@@ -26,13 +24,13 @@ So that I can organize and plan my business
 
 ## Usage Instructions
 
-![Demo](https://github.com/sloanlacey/express-note-taker/blob/main/public/assets/images/demo.gif)
+![Demo](https://github.com/sloanlacey/mysql-employee-tracker/blob/main/assets/images/demo.gif)
 
 Click [here](https://drive.google.com/file/d/1AwoE6H0Atp173St8zaNV5dqk8rGV04cn/view) for a full video demonstration.
 
 ## Technologies
 
-This project is created with:
+This project was created with:
 
 - [JavaScript](https://www.javascript.com/)
 
@@ -40,11 +38,11 @@ This project is created with:
 
 ## Summary
 
-- This application can be used by anyone who like to create and save notes dynamically in their web browser. It is easy to use and provides a space to organize thoughts and reminders.
+- This application was designed for business owners to be able to manage employee databases in MySQL, and organize information. Managers and employers can view departments, roles, and employee rosters. They can also add to any of those fields, as well as update the various roles of employees as they change positions within the company.
 
 ## Author
 
-- [Sloan Lacey](https://github.com/sloanlacey/express-note-taker)
+- [Sloan Lacey](https://github.com/sloanlacey/mysql-employee-tracker)
 
 ## Questions?
 
