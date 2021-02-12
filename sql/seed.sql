@@ -3,45 +3,45 @@ USE employee_tracker_DB;
 
 -- department seeds
 
-INSERT INTO departments (deptName)
+INSERT INTO departments (dept_name)
 VALUES ('Sales');
 
-INSERT INTO departments (deptName)
+INSERT INTO departments (dept_name)
 VALUES ('Accounting');
 
-INSERT INTO departments (deptName)
+INSERT INTO departments (dept_name)
 VALUES ('Human Resources');
 
 -- role seeds
 
 -- sales
-INSERT INTO roles (roleTitle, salary, department_id)
+INSERT INTO roles (role_title, salary, department_id)
 VALUES ('Sales Lead', 63000.00, 1);
 
-INSERT INTO roles (roleTitle, salary, department_id)
+INSERT INTO roles (role_title, salary, department_id)
 VALUES ('Sales Person', 59000.00, 1);
 
-INSERT INTO roles (roleTitle, salary, department_id)
+INSERT INTO roles (role_title, salary, department_id)
 VALUES ('Receptionist', 39000.00, 1);
 
 -- accounting
-INSERT INTO roles (roleTitle, salary, department_id)
+INSERT INTO roles (role_title, salary, department_id)
 VALUES ('Accountant', 57000.00, 2);
 
-INSERT INTO roles (roleTitle, salary, department_id)
+INSERT INTO roles (role_title, salary, department_id)
 VALUES ('Payroll', 44000.00, 2);
 
-INSERT INTO roles (roleTitle, salary, department_id)
+INSERT INTO roles (role_title, salary, department_id)
 VALUES ('Bookkeeper', 41000.00, 2);
 
 -- HR
-INSERT INTO roles (roleTitle, salary, department_id)
+INSERT INTO roles (role_title, salary, department_id)
 VALUES ('Workplace Safety Officer', 81000.00, 3);
 
-INSERT INTO roles (roleTitle, salary, department_id)
+INSERT INTO roles (role_title, salary, department_id)
 VALUES ('Talent Specialist', 77000.00, 3);
 
-INSERT INTO roles (roleTitle, salary, department_id)
+INSERT INTO roles (role_title, salary, department_id)
 VALUES ('HR Compliance Officer', 79000.00, 3);
 
 -- employee seeds

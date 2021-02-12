@@ -73,13 +73,13 @@ function initialChoice () {
 // Add a Department
 function addDepartment() {
     inquirer.prompt([{
-        type: "input",
-        name: "department",
-        message: "What is the name of the department that you wish to add?"
+        type: 'input',
+        name: 'department',
+        message: 'What is the name of the department that you wish to add?'
     }, ]).then(function(res) {
         connection.query('INSERT INTO departments (dept_name) VALUES (?)', [res.department], function(err, data) {
             if (err) throw err;
-            console.table("Successfully Inserted");
+            console.table('Successfully Inserted');
             initialChoice();
         })
     })
@@ -102,7 +102,7 @@ function addRole () {
             message: 'Please enter the department ID where you would like to add this role.',
         }
         ]).then(function (response) {
-            connection.query('INSERT INTO roles (role_title, salary, department_id) VALUES (?, ?, ?)', [response.role_title, response.salary, response.department_id], function (err, data) {
+            connection.query('INSERT INTO roles (role_title, salary, department_id) VALUES (?, ?, ?)', [response.roleName, response.roleSalary, response.departmentId], function (err, data) {
                 console.table(data);
             });
             initialChoice();
@@ -143,7 +143,7 @@ function addEmployee () {
 
 // viewDepartments function
 function viewDepartments() {
-    connection.query("SELECT * FROM departments", function (err, data) {
+    connection.query('SELECT * FROM departments ORDER BY id ASC', function (err, data) {
         console.table(data);
         initialChoice();
     })
@@ -151,7 +151,7 @@ function viewDepartments() {
 
 // viewRoles function
 function viewRoles() {
-    connection.query("SELECT * FROM roles", function (err, data) {
+    connection.query('SELECT * FROM roles ORDER BY id ASC', function (err, data) {
         console.table(data);
         initialChoice();
     })
@@ -160,7 +160,7 @@ function viewRoles() {
 // viewEmployees function
 function viewEmployees() {
 
-    connection.query("SELECT * FROM employees", function (err, data) {
+    connection.query('SELECT * FROM employees ORDER BY id ASC', function (err, data) {
         console.table(data);
         initialChoice();
     })
