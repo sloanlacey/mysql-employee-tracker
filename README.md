@@ -9,8 +9,6 @@ This is a command line application that allows business owners to build and mana
 ## Table of contents
 
 - [General Info](#general-info)
-- [Homepage](#homepage)
-- [Notes Page](#notes-page)
 - [Usage Instructions](#usage-instructions)
 - [Technologies](#technologies)
 - [Summary](#summary)
@@ -26,19 +24,11 @@ I want to be able to view and manage the departments, roles, and employees in my
 So that I can organize and plan my business
 ```
 
-## Homepage
-
-![Homepage](https://github.com/sloanlacey/express-note-taker/blob/main/public/assets/images/home.png)
-
-## Preview Readme
-
-![Notes Page](https://github.com/sloanlacey/express-note-taker/blob/main/public/assets/images/notes.png)
-
 ## Usage Instructions
 
 ![Demo](https://github.com/sloanlacey/express-note-taker/blob/main/public/assets/images/demo.gif)
 
-Click [here](https://drive.google.com/file/d/1iJJUqzz78ZtRYd9vmfa5cohU9SwN1Mzw/view) for a full video demonstration.
+Click [here](https://drive.google.com/file/d/1AwoE6H0Atp173St8zaNV5dqk8rGV04cn/view) for a full video demonstration.
 
 ## Technologies
 
@@ -46,7 +36,7 @@ This project is created with:
 
 - [JavaScript](https://www.javascript.com/)
 
-- [NPM (Express, generate-unique-ids)](https://www.npmjs.com/package/express)
+- [NPM (Express, mysql, console.table)](https://www.npmjs.com/package/express)
 
 ## Summary
 
