@@ -17,14 +17,9 @@ class DB {
         );
     }
 
-    addEmployee(employee) {
+    addEmployee(employees) {
         return this.connection.query(
-            `
-            INSERT INTO
-                employees  
-            SET
-                ?
-            `, employee
+            `INSERT INTO employees SET ?`, employees
         );
     }
 
