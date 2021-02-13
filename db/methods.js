@@ -5,59 +5,46 @@ class DB {
         this.connection = connection;
     }
 
-    addDepartment(departments) {
-        return this.connection.query('INSERT INTO departments SET ?', {
-          dept_name: departments
-        });
-    };
-
-    addRole(roles) {
-        return this.connection.query(
-            `INSERT INTO roles SET ?`, roles
-        );
-    }
-
-    addEmployee(employees) {
-        return this.connection.query(
-            `INSERT INTO employees SET ?`, employees
-        );
-    }
-
 viewDepartments(){
-    return this.connection.query(
-        `SELECT * FROM departments ORDER BY id ASC`
-    )
-};
-
-viewRoles() {
-    return this.connection.query(
-        `SELECT * from roles ORDER BY id ASC`
-    )
- };
-
-viewEmployees() {
-    return this.connection.query(
-        `SELECT * from employees ORDER BY id ASC
-            `
-    )
+    return this.connection.query(`SELECT * FROM departments ORDER BY id ASC`);
 };
     
-    // updateEmployeeRole(role_id, id) {
-    //     return this.connection.query(
-    //       `UPDATE employee
-    //         SET role_id = ? 
-    //         WHERE id = ?;`,
-    //       [role_id, id]
-    //     );
-    // };
-  
-    findEmployee() {
-    return this.connection.query('SELECT id, first_name, last_name FROM employees');
-    }
+viewRoles() {
+    return this.connection.query(`SELECT * from roles ORDER BY id ASC`);
+};
+    
+viewEmployees() {
+    return this.connection.query(`SELECT * from employees ORDER BY id ASC`);
+};
 
-    findRoles() {
-    return this.connection.query('SELECT id, role_title FROM roles');
-    }
+addDepartment(departments) {
+    return this.connection.query('INSERT INTO departments SET ?', {
+          dept_name: departments
+        });
+};
+
+addRole(roles) {
+    return this.connection.query(`INSERT INTO roles SET ?`, roles);
+};
+
+addEmployee(employees) {
+    return this.connection.query(`INSERT INTO employees SET ?`, employees);
+};
+    
+updateEmpRoles(newEmpRoll) {
+    console.log(newEmpRoll);
+    return this.connection.query(
+        `UPDATE employees SET role_id = ${newEmpRoll.newRole} WHERE id = ${newEmpRoll.empId}`, newEmpRoll
+    );
+}
+  
+    // findEmployee() {
+    // return this.connection.query('SELECT id, first_name, last_name FROM employees');
+    // }
+
+    // findRoles() {
+    // return this.connection.query('SELECT id, role_title FROM roles');
+    // }
 
 }
 

@@ -158,6 +158,42 @@ async function addRole() {
     initialChoice();
   }
 
+// Update functions
+
+async function updateEmpRoles() {
+    const checkRoles = await db.viewRoles();
+    const roleChoice = checkRoles.map(({ id, role_title }) => ({
+      name: role_title,
+      value: id
+    }))
+    const checkEmps = await db.viewEmployees();
+    const empChoice = checkEmps.map(({ id, first_name, last_name}) => ({
+      name: `${first_name} ${last_name}`,
+      value: id
+    
+    })); 
+  
+    const newEmpRoll = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'empId',
+        message: "Whose role would you like to update?",
+        choices: empChoice
+      },
+  
+      {
+        type: 'list',
+        name: 'newRole',
+        message: 'What is the employees new role ID?',
+        choices: roleChoice
+      }
+      
+    ])
+    // console.log(newEmpRoll);
+    await db.updateEmpRoles(newEmpRoll);
+    viewEmployees();
+    initialChoice();
+  }
 
 // Invoke start-up function
   initialChoice();
