@@ -1,7 +1,8 @@
+// Dependencies
 const inquirer = require('inquirer');
 require('console.table');
 const db = require('./db/methods.js');
-
+// Start-up function
 const initialChoice = () => {
 
     inquirer.prompt({
@@ -70,18 +71,50 @@ async function viewEmployees() {
 
     initialChoice();
   }
-
+// Add functions
   async function addDepartment() {
-    const answer = await inquirer.prompt({
+    const addDep = await inquirer.prompt({
       name: "departments",
       type: "input",
-      message: "What department would you like to add?"
+      message: "What is the name of the new department you wish to add?"
     });
   
-    const res = await db.addDepartment(answer.departments);
+    const res = await db.addDepartment(addDep.departments);
   
-    console.log(`Added ${answer.departments} to the the database.`);
+    console.log(`Added ${addDep.departments} to the the database.`);
     viewDepartments();
+    initialChoice();
 }
 
+async function addRole() {
+    const checkDepts = await db.viewDepartments();
+    const deptOptions = checkDepts.map(({ id, dept_name }) => ({
+      name: dept_name,
+      value: id
+    }))
+  
+    const roles = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'role_title',
+        message: 'What is the name of the new role you wish to add?'
+      },
+      {
+        type: 'input',
+        name: 'salary',
+        message: 'What is the salary for this new role?'
+      },
+      {
+        type: 'list',
+        name: 'department_id',
+        message: 'Into which department would you like this new role added?',
+        choices: deptOptions
+      }
+    ])
+    await db.addRole(roles);
+    viewRoles();
+    initialChoice();
+  }
+
+// Invoke start-up function
   initialChoice();

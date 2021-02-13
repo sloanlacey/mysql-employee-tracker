@@ -6,17 +6,16 @@ class DB {
     }
 
     addDepartment(departments) {
-        return this.connection.query("INSERT INTO departments SET ?", {
+        return this.connection.query('INSERT INTO departments SET ?', {
           dept_name: departments
         });
     };
 
-    // addRole(role, salary) {
-    //     return this.connection.query("INSERT INTO roles SET ?", {
-    //       title: role,
-    //       salary: salary
-    //     });
-    // };
+    addRole(roles) {
+        return this.connection.query(
+            `INSERT INTO roles SET ?`, roles
+        );
+    }
 
     // addEmployee(first_name, last_name, role_id, manager_id) {
     //     return this.connection.query("INSERT INTO employees SET ?", {
