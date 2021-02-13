@@ -17,14 +17,16 @@ class DB {
         );
     }
 
-    // addEmployee(first_name, last_name, role_id, manager_id) {
-    //     return this.connection.query("INSERT INTO employees SET ?", {
-    //       first_name: first_name,
-    //       last_name: last_name,
-    //       role_id: role_id,
-    //       manager_id: manager_id
-    //     });
-    // };
+    addEmployee(employee) {
+        return this.connection.query(
+            `
+            INSERT INTO
+                employees  
+            SET
+                ?
+            `, employee
+        );
+    }
 
 viewDepartments(){
     return this.connection.query(
@@ -54,13 +56,13 @@ viewEmployees() {
     //     );
     // };
   
-    // findEmployee() {
-    // return this.connection.query("SELECT id, first_name, last_name FROM employee");
-    // }
+    findEmployee() {
+    return this.connection.query('SELECT id, first_name, last_name FROM employees');
+    }
 
-    // findRoles() {
-    // return this.connection.query("SELECT id, title FROM role");
-    // }
+    findRoles() {
+    return this.connection.query('SELECT id, role_title FROM roles');
+    }
 
 }
 

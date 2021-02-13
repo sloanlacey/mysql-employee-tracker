@@ -72,7 +72,7 @@ async function viewEmployees() {
     initialChoice();
   }
 // Add functions
-  async function addDepartment() {
+async function addDepartment() {
     const addDep = await inquirer.prompt({
       name: "departments",
       type: "input",
@@ -115,6 +115,48 @@ async function addRole() {
     viewRoles();
     initialChoice();
   }
+
+  async function addEmployee() {
+    const roles = await db.viewEmployees();
+    const roleChoices = roles.map(({ role_id, role_title }) => ({
+      name: role_id,
+      value: role_title
+    }))
+  
+    const employees = await db.viewEmployees();
+    const managerIdChoices = employees.map(({ manager_id, role_title }) => ({
+      name: role_title,
+      value: manager_id
+    }))
+  
+    const employee = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'first_name',
+        message: "What is the new employees' first name?"
+      },
+      {
+        type: 'input',
+        name: 'last_name',
+        message: "What is the new employees' last name?"
+      },
+      {
+        type: 'list',
+        name: 'role_id',
+        message: "What is the new employees' role ID?",
+        choices: roleChoices
+      },
+      {
+        type: 'list',
+        name: 'manager_id',
+        message: 'What is the manager ID?',
+        choices: managerIdChoices
+      }
+    ])
+    await db.addEmployee(employee);
+    viewEmployees();
+  }
+
 
 // Invoke start-up function
   initialChoice();
