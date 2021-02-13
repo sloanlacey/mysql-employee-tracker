@@ -21,30 +21,14 @@ const initialChoice = () => {
         ],
     }).then(function ({ choices }) {
         switch (choices) {
-          case 'View departments':
-            viewDepartments();
-            break;
-          case 'View roles':
-            viewRoles();
-            break;
-          case 'View employees':
-            viewEmployees();
-            break;
-          case 'Add a department':
-            addDepartment();
-            break;
-          case 'Add a role':
-            addRole();
-            break;
-          case 'Add an employee':
-            addEmployee();
-            break;
-          case 'Update employee roles':
-            updateEmpRoles();
-            break;
-          case 'End the application':
-            console.log('The application has ended.');
-            break;  
+          case 'View departments': return viewDepartments();
+          case 'View roles': return viewRoles();
+          case 'View employees': return viewEmployees();
+          case 'Add a department': return addDepartment();
+          case 'Add a role': return addRole();
+          case 'Add an employee': return addEmployee();
+          case 'Update employee roles': return updateEmpRoles();
+          case 'EXIT': process.exit();
         }
     });
 }
@@ -113,7 +97,6 @@ async function addRole() {
     ])
     await db.addRole(roles);
     viewRoles();
-    initialChoice();
   }
 
   async function addEmployee() {
@@ -155,7 +138,6 @@ async function addRole() {
     ])
     await db.addEmployee(employees);
     viewEmployees();
-    initialChoice();
   }
 
 // Update functions
@@ -192,7 +174,6 @@ async function updateEmpRoles() {
     // console.log(newEmpRoll);
     await db.updateEmpRoles(newEmpRoll);
     viewEmployees();
-    initialChoice();
   }
 
 // Invoke start-up function
