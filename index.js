@@ -125,7 +125,7 @@ async function addRole() {
   
     const managers = await db.viewEmployees();
     const managerIdChoices = managers.map(({ first_name, last_name, manager_id }) => ({
-      name: first_name,
+      name: `${first_name} ${last_name}`,
       value: manager_id
     }))
   
