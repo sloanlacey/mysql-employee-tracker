@@ -37,14 +37,7 @@ updateEmpRoles(newEmpRoll) {
         `UPDATE employees SET role_id = ${newEmpRoll.newRole} WHERE id = ${newEmpRoll.empId}`, newEmpRoll
     );
 }
-  
-    // findEmployee() {
-    // return this.connection.query('SELECT id, first_name, last_name FROM employees');
-    // }
 
-    // findRoles() {
-    // return this.connection.query('SELECT id, role_title FROM roles');
-    // }
 
 }
 

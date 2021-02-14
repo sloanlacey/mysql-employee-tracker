@@ -40,6 +40,12 @@ async function addRole() {
     viewRoles();
   };
 ```
+As well as unique methods inside a class constructor:
+```javascript
+addRole(roles) {
+    return this.connection.query(`INSERT INTO roles SET ?`, roles);
+};
+```
 
 ## Usage Instructions
 
