@@ -7,6 +7,7 @@ This is a command line application that allows business owners to build and mana
 ## Table of contents
 
 - [General Info](#general-info)
+- [Code Snippets](#code-snippets)
 - [Usage Instructions](#usage-instructions)
 - [Technologies](#technologies)
 - [Summary](#summary)
@@ -20,6 +21,24 @@ This application meets the following criteria:
 As a business owner
 I want to be able to view and manage the departments, roles, and employees in my company
 So that I can organize and plan my business
+```
+
+## Code Snippets
+
+This application uses all asynchronous functions:
+
+```
+async function addRole() {
+    const checkDepts = await db.viewDepartments();
+    const deptOptions = checkDepts.map(({ id, dept_name }) => ({
+      name: dept_name,
+      value: id
+    }));
+  
+    const roles = await inquirer.prompt(prompt.addingRole(deptOptions));
+    await db.addRole(roles);
+    viewRoles();
+  };
 ```
 
 ## Usage Instructions
