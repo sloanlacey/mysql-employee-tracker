@@ -22,21 +22,21 @@ const initialChoice = () => {
 async function viewDepartments() {
     const viewDept = await db.viewDepartments();
     console.table(viewDept);
-
+    console.log('======================================================');
     initialChoice();
   };
 
 async function viewRoles() {
     const viewRole = await db.viewRoles();
     console.table(viewRole);
-    
+    console.log('======================================================');
     initialChoice();
   };
 
 async function viewEmployees() {
     const viewEmps = await db.viewEmployees();
     console.table(viewEmps);
-
+    console.log('======================================================');
     initialChoice();
   };
 // Add functions
@@ -45,6 +45,7 @@ async function addDepartment() {
     const res = await db.addDepartment(addDep.departments);
     console.log(`Added ${addDep.departments} to the the database.`);
     viewDepartments();
+    console.log('======================================================');
 };
 
 async function addRole() {
@@ -57,6 +58,7 @@ async function addRole() {
     const roles = await inquirer.prompt(prompt.addingRole(deptOptions));
     await db.addRole(roles);
     viewRoles();
+    console.log('======================================================');
   };
 
   async function addEmployee() {
@@ -75,6 +77,7 @@ async function addRole() {
     const employees = await inquirer.prompt(prompt.addingEmps(roleChoices, managerIdChoices))
     await db.addEmployee(employees);
     viewEmployees();
+    console.log('======================================================');
   };
 
 // Update functions
@@ -94,6 +97,7 @@ async function updateEmpRoles() {
     const newEmpRoll = await inquirer.prompt(prompt.updateRoles(empChoice, roleChoice));
     await db.updateEmpRoles(newEmpRoll);
     viewEmployees();
+    console.log('======================================================');
   };
 // Invoke start-up function
   initialChoice();

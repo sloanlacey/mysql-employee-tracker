@@ -26,7 +26,7 @@ So that I can organize and plan my business
 
 ![Demo](https://github.com/sloanlacey/mysql-employee-tracker/blob/main/assets/images/demo.gif)
 
-Click [here](https://drive.google.com/file/d/1AwoE6H0Atp173St8zaNV5dqk8rGV04cn/view) for a full video demonstration.
+Click [here](https://drive.google.com/file/d/167LM4ToZSBy6t49jK19jS2lcgen0KYQD/view) for a full video demonstration.
 
 ## Technologies
 

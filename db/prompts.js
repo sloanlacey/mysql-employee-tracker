@@ -11,7 +11,7 @@ module.exports = {
                 'Add a role',
                 'Add an employee',
                 'Update employee roles',
-                'End the application',
+                'EXIT',
         ],
     },
 
@@ -44,23 +44,23 @@ module.exports = {
         {
             type: 'input',
             name: 'first_name',
-            message: "What is the new employees' first name?"
+            message: 'What is the new employees\' first name?'
           },
           {
             type: 'input',
             name: 'last_name',
-            message: "What is the new employees' last name?"
+            message: 'What is the new employees\' last name?'
           },
           {
             type: 'list',
             name: 'role_id',
-            message: "What is the new employees' role ID?",
+            message: 'What is the role of the new employee?',
             choices: roleChoices
           },
           {
             type: 'list',
             name: 'manager_id',
-            message: 'What is the manager ID?',
+            message: 'Who is the manager for this employee?',
             choices: managerIdChoices
           },
     ],
@@ -69,14 +69,14 @@ module.exports = {
         {
             type: 'list',
             name: 'empId',
-            message: "Whose role would you like to update?",
+            message: 'Whose role would you like to update?',
             choices: empChoice
           },
       
           {
             type: 'list',
             name: 'newRole',
-            message: 'What is the employees new role ID?',
+            message: 'What is the employees new role?',
             choices: roleChoice
           },
     ],
