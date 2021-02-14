@@ -27,7 +27,7 @@ So that I can organize and plan my business
 
 This application uses all asynchronous functions:
 
-```
+```javascript
 async function addRole() {
     const checkDepts = await db.viewDepartments();
     const deptOptions = checkDepts.map(({ id, dept_name }) => ({
